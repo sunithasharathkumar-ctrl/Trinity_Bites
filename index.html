@@ -1,27 +1,21 @@
-<index.html>
+<!DOCTYPE html>
 <html>
 <head>
-  <title>QR Menu Generator</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <title>Amma Hotel Menu</title>
 </head>
 <body>
 
-<h2>Generate QR for Menu</h2>
+<h1>🍽️ Amma Hotel Menu</h1>
 
-<input id="url" placeholder="Enter your menu link">
-<button onclick="generateQR()">Generate QR</button>
+<h3>Breakfast</h3>
+<p>Masala Dosa - ₹80</p>
+<p>Idli Vada - ₹50</p>
 
-<div id="qrcode"></div>
+<h3>Meals</h3>
+<p>Veg Meals - ₹120</p>
 
-<script>
-function generateQR() {
-  let url = document.getElementById("url").value;
-
-  document.getElementById("qrcode").innerHTML = "";
-
-  new QRCode(document.getElementById("qrcode"), url);
-}
-</script>
+<h3>Drinks</h3>
+<p>Filter Coffee - ₹30</p>
 
 </body>
 </html>
