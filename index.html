@@ -5,41 +5,43 @@
 
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: Arial;
       background: #f5f5f5;
       margin: 0;
-      padding: 0;
     }
 
     header {
       background: #ff5722;
       color: white;
       text-align: center;
-      padding: 20px;
-      font-size: 24px;
-      font-weight: bold;
+      padding: 15px;
+      font-size: 22px;
     }
 
     .container {
       padding: 15px;
     }
 
-    .section-title {
-      font-size: 22px;
-      margin-top: 20px;
-      margin-bottom: 10px;
-      color: #333;
-    }
-
     .card {
       background: white;
-      padding: 15px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      padding: 10px;
       border-radius: 10px;
-      box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+    }
+
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+    }
+
+    .info {
+      flex: 1;
+      margin-left: 10px;
     }
 
     .price {
@@ -47,54 +49,121 @@
       font-weight: bold;
     }
 
-    .btn {
+    button {
       background: #ff5722;
       color: white;
       border: none;
-      padding: 8px 12px;
+      padding: 6px 10px;
       border-radius: 5px;
-      cursor: pointer;
     }
 
-    .btn:hover {
-      background: #e64a19;
+    #cart {
+      background: white;
+      padding: 10px;
+      margin-top: 20px;
+      border-radius: 10px;
     }
   </style>
 
 </head>
+
 <body>
 
 <header>🍽️ Amma Hotel</header>
 
+<div class="container" id="menu"></div>
+
 <div class="container">
+  <h3>🧾 Order Summary</h3>
+  <div id="cart"></div>
+  <p id="total"></p>
 
-  <div class="section-title">Breakfast</div>
-
-  <div class="card">
-    <span>Masala Dosa</span>
-    <span class="price">₹80</span>
-  </div>
-
-  <div class="card">
-    <span>Idli Vada</span>
-    <span class="price">₹50</span>
-  </div>
-
-  <div class="section-title">Meals</div>
-
-  <div class="card">
-    <span>Veg Meals</span>
-    <span class="price">₹120</span>
-  </div>
-
-  <div class="section-title">Drinks</div>
-
-  <div class="card">
-    <span>Filter Coffee</span>
-    <span class="price">₹30</span>
-  </div>
-
+  <button onclick="payNow()">💳 Pay Now</button>
+  <button onclick="startVoice()">🎤 Voice Order</button>
 </div>
+
+<script>
+
+const menu = [
+  {id:1, name:"Masala Dosa", price:80, img:"https://i.imgur.com/0umadnY.jpg"},
+  {id:2, name:"Idli Vada", price:50, img:"https://i.imgur.com/TkIrScD.jpg"},
+  {id:3, name:"Veg Meals", price:120, img:"https://i.imgur.com/1bX5QH6.jpg"},
+  {id:4, name:"Filter Coffee", price:30, img:"https://i.imgur.com/H7nXH0S.jpg"}
+];
+
+let cart = [];
+
+// SHOW MENU
+function showMenu() {
+  let html = "";
+
+  menu.forEach(item => {
+    html += `
+      <div class="card">
+        <img src="${item.img}">
+        <div class="info">
+          <div>${item.name}</div>
+          <div class="price">₹${item.price}</div>
+        </div>
+        <button onclick="addToCart(${item.id})">Add</button>
+      </div>
+    `;
+  });
+
+  document.getElementById("menu").innerHTML = html;
+}
+
+// ADD TO CART
+function addToCart(id) {
+  let item = menu.find(i => i.id === id);
+  cart.push(item);
+  updateCart();
+
+  // Smart suggestion
+  if (item.name === "Masala Dosa") {
+    alert("🤖 Try Filter Coffee!");
+  }
+}
+
+// UPDATE CART
+function updateCart() {
+  let html = "";
+  let total = 0;
+
+  cart.forEach(item => {
+    html += `<p>${item.name} - ₹${item.price}</p>`;
+    total += item.price;
+  });
+
+  document.getElementById("cart").innerHTML = html;
+  document.getElementById("total").innerText = "Total: ₹" + total;
+}
+
+// PAYMENT
+function payNow() {
+  alert("💳 Payment Successful! Order sent to kitchen 👨‍🍳");
+}
+
+// VOICE ORDER
+function startVoice() {
+  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  recognition.lang = "en-IN";
+
+  recognition.start();
+
+  recognition.onresult = function(event) {
+    let speech = event.results[0][0].transcript.toLowerCase();
+
+    if (speech.includes("dosa")) addToCart(1);
+    if (speech.includes("idli")) addToCart(2);
+    if (speech.includes("meals")) addToCart(3);
+    if (speech.includes("coffee")) addToCart(4);
+  };
+}
+
+showMenu();
+
+</script>
 
 </body>
 </html>
