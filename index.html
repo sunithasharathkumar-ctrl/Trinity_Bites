@@ -1,164 +1,227 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Amma Hotel Menu</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      font-family: Arial;
-      background: #f5f5f5;
-      margin: 0;
-    }
+<title>Amma Hotel</title>
 
-    header {
-      background: #ff5722;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      font-size: 22px;
-    }
+<style>
 
-    .container {
-      padding: 15px;
-    }
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f3f3f3;
+}
 
-    .card {
-      background: white;
-      margin-bottom: 12px;
-      padding: 10px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+header{
+    background:#ff5722;
+    color:white;
+    text-align:center;
+    padding:20px;
+    font-size:28px;
+    font-weight:bold;
+}
 
-    img {
-      width: 60px;
-      height: 60px;
-      border-radius: 10px;
-    }
+.container{
+    padding:15px;
+}
 
-    .info {
-      flex: 1;
-      margin-left: 10px;
-    }
+.card{
+    background:white;
+    border-radius:15px;
+    padding:10px;
+    margin-bottom:15px;
+    display:flex;
+    align-items:center;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
 
-    .price {
-      color: #ff5722;
-      font-weight: bold;
-    }
+.card img{
+    width:100px;
+    height:100px;
+    border-radius:10px;
+    object-fit:cover;
+}
 
-    button {
-      background: #ff5722;
-      color: white;
-      border: none;
-      padding: 6px 10px;
-      border-radius: 5px;
-    }
+.info{
+    flex:1;
+    margin-left:15px;
+}
 
-    #cart {
-      background: white;
-      padding: 10px;
-      margin-top: 20px;
-      border-radius: 10px;
-    }
-  </style>
+.name{
+    font-size:20px;
+    font-weight:bold;
+}
 
+.price{
+    color:#ff5722;
+    margin-top:5px;
+    font-size:18px;
+}
+
+button{
+    background:#ff5722;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:#e64a19;
+}
+
+.cart{
+    background:white;
+    padding:15px;
+    border-radius:15px;
+    margin-top:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+.total{
+    font-size:20px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.pay-btn{
+    width:100%;
+    margin-top:15px;
+    padding:15px;
+    font-size:18px;
+}
+
+</style>
 </head>
 
 <body>
 
-<header>🍽️ Amma Hotel</header>
+<header>
+🍽️ Amma Hotel
+</header>
 
 <div class="container" id="menu"></div>
 
 <div class="container">
-  <h3>🧾 Order Summary</h3>
-  <div id="cart"></div>
-  <p id="total"></p>
+    <div class="cart">
+        <h2>🧾 Order Summary</h2>
 
-  <button onclick="payNow()">💳 Pay Now</button>
-  <button onclick="startVoice()">🎤 Voice Order</button>
+        <div id="cart-items"></div>
+
+        <div class="total" id="total">
+            Total: ₹0
+        </div>
+
+        <button class="pay-btn" onclick="payNow()">
+            💳 Pay Now
+        </button>
+    </div>
 </div>
 
 <script>
 
-const menu = [
-  {id:1, name:"Masala Dosa", price:80, img:"https://i.imgur.com/0umadnY.jpg"},
-  {id:2, name:"Idli Vada", price:50, img:"https://i.imgur.com/TkIrScD.jpg"},
-  {id:3, name:"Veg Meals", price:120, img:"https://i.imgur.com/1bX5QH6.jpg"},
-  {id:4, name:"Filter Coffee", price:30, img:"https://i.imgur.com/H7nXH0S.jpg"}
+const foods = [
+
+{
+    name:"Masala Dosa",
+    price:80,
+    image:"https://images.unsplash.com/photo-1668236543090-82eba5ee5976?q=80&w=800"
+},
+
+{
+    name:"Idli Vada",
+    price:50,
+    image:"https://images.unsplash.com/photo-1589302168068-964664d93dc0?q=80&w=800"
+},
+
+{
+    name:"Veg Meals",
+    price:120,
+    image:"https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=800"
+},
+
+{
+    name:"Filter Coffee",
+    price:30,
+    image:"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800"
+}
+
 ];
 
 let cart = [];
 
-// SHOW MENU
-function showMenu() {
-  let html = "";
+function showMenu(){
 
-  menu.forEach(item => {
-    html += `
-      <div class="card">
-        <img src="${item.img}">
-        <div class="info">
-          <div>${item.name}</div>
-          <div class="price">₹${item.price}</div>
+    let output = "";
+
+    foods.forEach((food,index)=>{
+
+        output += `
+
+        <div class="card">
+
+            <img src="${food.image}">
+
+            <div class="info">
+
+                <div class="name">${food.name}</div>
+
+                <div class="price">₹${food.price}</div>
+
+            </div>
+
+            <button onclick="addToCart(${index})">
+                Add
+            </button>
+
         </div>
-        <button onclick="addToCart(${item.id})">Add</button>
-      </div>
-    `;
-  });
 
-  document.getElementById("menu").innerHTML = html;
+        `;
+
+    });
+
+    document.getElementById("menu").innerHTML = output;
+
 }
 
-// ADD TO CART
-function addToCart(id) {
-  let item = menu.find(i => i.id === id);
-  cart.push(item);
-  updateCart();
+function addToCart(index){
 
-  // Smart suggestion
-  if (item.name === "Masala Dosa") {
-    alert("🤖 Try Filter Coffee!");
-  }
+    cart.push(foods[index]);
+
+    updateCart();
+
 }
 
-// UPDATE CART
-function updateCart() {
-  let html = "";
-  let total = 0;
+function updateCart(){
 
-  cart.forEach(item => {
-    html += `<p>${item.name} - ₹${item.price}</p>`;
-    total += item.price;
-  });
+    let items = "";
+    let total = 0;
 
-  document.getElementById("cart").innerHTML = html;
-  document.getElementById("total").innerText = "Total: ₹" + total;
+    cart.forEach(food=>{
+
+        items += `
+            <p>${food.name} - ₹${food.price}</p>
+        `;
+
+        total += food.price;
+
+    });
+
+    document.getElementById("cart-items").innerHTML = items;
+
+    document.getElementById("total").innerHTML =
+    `Total: ₹${total}`;
+
 }
 
-// PAYMENT
-function payNow() {
-  alert("💳 Payment Successful! Order sent to kitchen 👨‍🍳");
-}
+function payNow(){
 
-// VOICE ORDER
-function startVoice() {
-  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-  recognition.lang = "en-IN";
+    alert("✅ Payment Successful!\n\n👨‍🍳 Order Sent To Kitchen");
 
-  recognition.start();
-
-  recognition.onresult = function(event) {
-    let speech = event.results[0][0].transcript.toLowerCase();
-
-    if (speech.includes("dosa")) addToCart(1);
-    if (speech.includes("idli")) addToCart(2);
-    if (speech.includes("meals")) addToCart(3);
-    if (speech.includes("coffee")) addToCart(4);
-  };
 }
 
 showMenu();
