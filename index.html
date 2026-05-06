@@ -8,6 +8,12 @@
 
 <style>
 
+<div class="floating-cart">
+
+🛒
+
+</div>
+
 body{
     margin:0;
     font-family:Arial, sans-serif;
@@ -27,8 +33,55 @@ header{
     box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 
+<div class="categories">
+
+<button onclick="filterCategory('All')">
+All
+</button>
+
+<button onclick="filterCategory('Breakfast')">
+Breakfast
+</button>
+
+<button onclick="filterCategory('Meals')">
+Meals
+</button>
+
+<button onclick="filterCategory('Drinks')">
+Drinks
+</button>
+
+</div>
+    
 .container{
     padding:15px;
+}
+
+.categories{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding:10px 15px;
+}
+
+.categories button{
+    white-space:nowrap;
+}
+
+.floating-cart{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#ff5722;
+    color:white;
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:28px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.3);
 }
 
 .card{
@@ -43,6 +96,19 @@ header{
     transition:0.3s;
 }
 
+.search-box{
+    padding:15px;
+}
+
+.search-box input{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:15px;
+    font-size:18px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+    
 .card:hover{
     transform:translateY(-5px);
 }
@@ -138,40 +204,78 @@ button:hover{
 
 <script>
 
+function filterCategory(category){
+
+    if(category === "All"){
+        showMenu();
+        return;
+    }
+
+    let filtered =
+    foods.filter(food =>
+        food.category === category
+    );
+
+    showMenu(filtered);
+
+}
+
+function searchFood(){
+
+    let search =
+    document.getElementById("search")
+    .value
+    .toLowerCase();
+
+    let filteredFoods =
+    foods.filter(food =>
+        food.name.toLowerCase().includes(search)
+    );
+
+    showMenu(filteredFoods);
+
+} 
+
 const foods = [
 
 {
     name:"Masala Dosa",
+    category:"Breakfast",
     price:80,
     image:"https://i1-e.pinimg.com/1200x/99/ee/a0/99eea08c91fdadd332686fa9832d9d47.jpg"
 },
 
 {
     name:"Idli Vada",
+    category:"Breakfast",
     price:50,
     image:"https://i1-e.pinimg.com/1200x/34/74/6b/34746bec59e01d8aff50255bc0d75c30.jpg"
 },
 
 {
     name:"Sounth Indian Meals",
+    category:"Lunch",
     price:120,
     image:"https://i.pinimg.com/736x/05/a8/2a/05a82ad4d9b3a51c6266578a2ff4d796.jpg"
 },
 
 {
     name:"North Indian Meals",
+    category:"Lunch",
     price:150,
     image:"https://i1-e.pinimg.com/736x/26/24/b4/2624b46fbf64636d9359e8cd7b2251f4.jpg"
 },
 
 {
     name:"Fresh Juice",
+    category:"Cool Drinks",
     price:80,
     image:"https://i.pinimg.com/736x/36/b6/fe/36b6fe3850a7c6e1b3e680c59da4fa03.jpg"
 },
   
 {
     name:"Filter Coffee",
+    category:"Hot Drinks",
     price:30,
     image:"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800"
 }
@@ -180,11 +284,11 @@ const foods = [
 
 let cart = [];
 
-function showMenu(){
+function showMenu(foodList = foods){
 
     let output = "";
 
-    foods.forEach((food,index)=>{
+    foodList.forEach((food,index)=>{
 
         output += `
 
@@ -194,9 +298,13 @@ function showMenu(){
 
             <div class="info">
 
-                <div class="name">${food.name}</div>
+                <div class="name">
+                    ${food.name}
+                </div>
 
-                <div class="price">₹${food.price}</div>
+                <div class="price">
+                    ₹${food.price}
+                </div>
 
             </div>
 
@@ -210,7 +318,8 @@ function showMenu(){
 
     });
 
-    document.getElementById("menu").innerHTML = output;
+    document.getElementById("menu")
+    .innerHTML = output;
 
 }
 
