@@ -288,81 +288,6 @@ Drinks
 
 <script>
 
-function filterCategory(category){
-
-    if(category === "All"){
-        showMenu();
-        return;
-    }
-
-    let filtered =
-    foods.filter(food =>
-        food.category === category
-    );
-
-    showMenu(filtered);
-
-}
-
-function searchFood(){
-
-    let search =
-    document.getElementById("search")
-    .value
-    .toLowerCase();
-
-    let filteredFoods =
-    foods.filter(food =>
-        food.name.toLowerCase().includes(search)
-    );
-
-    showMenu(filteredFoods);
-
-} 
-
-function payNow(){
-
-let total = cart.reduce(
-(sum,item)=> sum + item.price,
-0
-);
-
-function payNow(){
-
-    if(cart.length === 0){
-
-        alert("Please add food items first!");
-
-        return;
-
-    }
-
-    let total = cart.reduce(
-    (sum,item)=> sum + item.price,
-    0
-    );
-
-    let upiLink =
-    `upi://pay?pa=9110656160@ybl&pn=SLVUpahara&am=${total}`;
-
-    window.location.href = upiLink;
-
-}
-
-let upiLink =
-`upi://pay?pa=9110656160@ybl&pn=SLVUpahara&am=${total}`;
-
-window.location.href = upiLink;
-
-}
-
-let upiLink =
-`upi://pay?pa=9110656160@ybl&pn=SLVUpahara&am=${total}`;
-
-window.location.href = upiLink;
-
-}
-    
 const foods = [
 
 {
@@ -399,7 +324,7 @@ const foods = [
     price:80,
     image:"https://i.pinimg.com/736x/36/b6/fe/36b6fe3850a7c6e1b3e680c59da4fa03.jpg"
 },
-  
+
 {
     name:"Filter Coffee",
     category:"Drinks",
@@ -413,31 +338,39 @@ let cart = [];
 
 function showMenu(foodList = foods){
 
-let output = "";
+    let output = "";
 
-foodList.forEach((food,index)=>{
+    foodList.forEach((food,index)=>{
 
-output += `
-<div class="card">
+        output += `
 
-<img src="${food.image}">
+        <div class="card">
 
-<div class="info">
-<div class="name">${food.name}</div>
-<div class="price">₹${food.price}</div>
-</div>
+            <img src="${food.image}">
 
-<button onclick="addToCart(${index})">
-Add
-</button>
+            <div class="info">
 
-</div>
-`;
+                <div class="name">
+                    ${food.name}
+                </div>
 
-});
+                <div class="price">
+                    ₹${food.price}
+                </div>
 
-document.getElementById("menu")
-.innerHTML = output;
+            </div>
+
+            <button onclick="addToCart(${index})">
+                Add
+            </button>
+
+        </div>
+
+        `;
+
+    });
+
+    document.getElementById("menu").innerHTML = output;
 
 }
 
@@ -457,7 +390,7 @@ function updateCart(){
     cart.forEach(food=>{
 
         items += `
-            <p>${food.name} - ₹${food.price}</p>
+        <p>${food.name} - ₹${food.price}</p>
         `;
 
         total += food.price;
@@ -471,9 +404,59 @@ function updateCart(){
 
 }
 
+function filterCategory(category){
+
+    if(category === "All"){
+
+        showMenu();
+
+        return;
+
+    }
+
+    let filteredFoods = foods.filter(food =>
+        food.category === category
+    );
+
+    showMenu(filteredFoods);
+
+}
+
+function searchFood(){
+
+    let search =
+    document.getElementById("search")
+    .value
+    .toLowerCase();
+
+    let filteredFoods =
+    foods.filter(food =>
+        food.name.toLowerCase().includes(search)
+    );
+
+    showMenu(filteredFoods);
+
+}
+
 function payNow(){
 
-    alert("✅ Payment Successful!\n\n👨‍🍳 Order Sent To Kitchen");
+    if(cart.length === 0){
+
+        alert("Please add food items!");
+
+        return;
+
+    }
+
+    let total = cart.reduce(
+    (sum,item)=> sum + item.price,
+    0
+    );
+
+    let upiLink =
+    `upi://pay?pa=9110656160@ybl&pn=SLVUpahara&am=${total}`;
+
+    window.location.href = upiLink;
 
 }
 
