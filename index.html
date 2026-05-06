@@ -266,6 +266,14 @@ Meals
 Drinks
 </button>
 
+<button onclick="payPhonePe()">
+💜 Pay with PhonePe
+</button>
+
+<button onclick="payGPay()">
+💙 Pay with GPay
+</button>
+
 </div> 
 
 <div class="container" id="menu"></div>
@@ -382,6 +390,30 @@ function addToCart(index){
 
 }
 
+function payPhonePe(){
+
+let total = cart.reduce(
+(sum,item)=> sum + item.price,
+0
+);
+
+window.location.href =
+`phonepe://pay?pa=9110656160@ybl&pn=SLVUpahara&am=${total}&cu=INR`;
+
+}
+
+function payGPay(){
+
+let total = cart.reduce(
+(sum,item)=> sum + item.price,
+0
+);
+
+window.location.href =
+`tez://upi/pay?pa=9110656160@ybl&pn=SLVUpahara&am=${total}&cu=INR`;
+
+}
+
 function updateCart(){
 
     let items = "";
@@ -453,10 +485,14 @@ function payNow(){
     0
     );
 
-    let upiLink =
-    `upi://pay?pa=9110656160@ybl&pn=SLVUpahara&am=${total}`;
+    let upiID = "9110656160@ybl";
 
-    window.location.href = upiLink;
+    let name = "SLV Upahara";
+
+    let phonePeLink =
+    `phonepe://pay?pa=${upiID}&pn=${name}&am=${total}&cu=INR`;
+
+    window.location.href = phonePeLink;
 
 }
 
