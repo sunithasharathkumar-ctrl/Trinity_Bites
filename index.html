@@ -26,11 +26,27 @@ header{
     font-weight:bold;
     box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
-    
-.container{
+.categories{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
     padding:15px;
 }
 
+.categories button{
+    background:white;
+    color:#ff5722;
+    border:none;
+    padding:10px 15px;
+    border-radius:20px;
+    font-weight:bold;
+    cursor:pointer;
+    white-space:nowrap;
+}    
+
+.container{
+    padding:15px;
+}
 .categories{
     display:flex;
     gap:10px;
@@ -148,7 +164,7 @@ button:hover{
     padding:15px;
     font-size:18px;
 }
-
+    
 </style>
 </head>
 
@@ -161,6 +177,26 @@ button:hover{
 <header>
 🍽️ Amma Mess
 </header>
+
+<div class="categories">
+
+<button onclick="filterCategory('All')">
+All
+</button>
+
+<button onclick="filterCategory('Breakfast')">
+Breakfast
+</button>
+
+<button onclick="filterCategory('Meals')">
+Meals
+</button>
+
+<button onclick="filterCategory('Drinks')">
+Drinks
+</button>
+
+</div>
 
 <div class="search-box">
     <input 
