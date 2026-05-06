@@ -18,12 +18,13 @@ background: rgba(255,255,255,0.2);
 backdrop-filter: blur(10px);
     
 header{
-    background:linear-gradient(135deg, #ff5722, #ff9800);;
+    background: linear-gradient(135deg,#ff5722,#ff9800);
     color:white;
     text-align:center;
     padding:25px;
-    font-size:25px;
+    font-size:30px;
     font-weight:bold;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 
 .container{
@@ -31,13 +32,19 @@ header{
 }
 
 .card{
-    background:white;
-    border-radius:15px;
-    padding:10px;
-    margin-bottom:15px;
+    background: rgba(255,255,255,0.8);
+    backdrop-filter: blur(10px);
+    border-radius:20px;
+    padding:15px;
+    margin-bottom:20px;
     display:flex;
     align-items:center;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
 }
 
 .card img{
