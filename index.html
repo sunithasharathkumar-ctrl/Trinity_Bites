@@ -33,10 +33,7 @@ body{
     font-family:Arial, sans-serif;
     background:#751A1A;
 }
-
-background: rgba(255,255,255,0.2);
-backdrop-filter: blur(10px);
-    
+   
 header{
     background: linear-gradient(135deg,#7b1113,#8e1b1f);
     color:white;
@@ -184,7 +181,35 @@ button:hover{
     padding:15px;
     font-size:18px;
 }
-    
+
+@media(max-width:600px){
+
+.card{
+    flex-direction:column;
+    text-align:center;
+}
+
+.card img{
+    width:100%;
+    height:220px;
+}
+
+.info{
+    margin-left:0;
+    margin-top:10px;
+}
+
+button{
+    width:100%;
+    margin-top:10px;
+}
+
+.hotel-name{
+    font-size:28px;
+}
+
+}
+
 </style>
 </head>
 
@@ -198,7 +223,8 @@ button:hover{
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <div class="floating-cart">
-</div> 
+🛒
+</div>
 
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#ff5722">
@@ -293,11 +319,6 @@ function searchFood(){
     showMenu(filteredFoods);
 
 } 
-function payNow(){
-
-alert("✅ Payment Successful!");
-
-}
 
 function payNow(){
 
@@ -306,10 +327,25 @@ let total = cart.reduce(
 0
 );
 
-let upiLink =
-`upi://pay?pa=9110656160@ybl&pn=SLVUpahara&am=${total}`;
+function payNow(){
 
-window.location.href = upiLink;
+    if(cart.length === 0){
+
+        alert("Please add food items first!");
+
+        return;
+
+    }
+
+    let total = cart.reduce(
+    (sum,item)=> sum + item.price,
+    0
+    );
+
+    let upiLink =
+    `upi://pay?pa=9110656160@ybl&pn=SLVUpahara&am=${total}`;
+
+    window.location.href = upiLink;
 
 }
 
@@ -366,7 +402,7 @@ const foods = [
   
 {
     name:"Filter Coffee",
-    category:"Beverage",
+    category:"Drinks",
     price:30,
     image:"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800"
 }
