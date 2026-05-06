@@ -377,40 +377,31 @@ let cart = [];
 
 function showMenu(foodList = foods){
 
-    let output = "";
+let output = "";
 
-    foodList.forEach((food,index)=>{
+foodList.forEach((food,index)=>{
 
-        output += `
+output += `
+<div class="card">
 
-        <div class="card">
+<img src="${food.image}">
 
-            <img src="${food.image}">
+<div class="info">
+<div class="name">${food.name}</div>
+<div class="price">₹${food.price}</div>
+</div>
 
-            <div class="info">
+<button onclick="addToCart(${index})">
+Add
+</button>
 
-                <div class="name">
-                    ${food.name}
-                </div>
+</div>
+`;
 
-                <div class="price">
-                    ₹${food.price}
-                </div>
+});
 
-            </div>
-
-            <button onclick="addToCart(${index})">
-                Add
-            </button>
-
-        </div>
-
-        `;
-
-    });
-
-    document.getElementById("menu")
-    .innerHTML = output;
+document.getElementById("menu")
+.innerHTML = output;
 
 }
 
