@@ -9,9 +9,7 @@
 <style>
 
 <div class="floating-cart">
-
 🛒
-
 </div>
 
 body{
@@ -33,8 +31,6 @@ header{
     box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 
-<div class="categories">
-
 <button onclick="filterCategory('All')">
 All
 </button>
@@ -43,12 +39,16 @@ All
 Breakfast
 </button>
 
-<button onclick="filterCategory('Meals')">
-Meals
+<button onclick="filterCategory('Lunch')">
+Lunch
 </button>
 
-<button onclick="filterCategory('Drinks')">
-Drinks
+<button onclick="filterCategory('Cold Drinks')">
+Cold Drinks
+</button>
+
+<button onclick="filterCategory('Beverage')">
+Beverage 
 </button>
 
 </div>
@@ -84,8 +84,7 @@ Drinks
     box-shadow:0 4px 15px rgba(0,0,0,0.3);
 }
 
-.card{
-    background: rgba(255,255,255,0.8);
+
     backdrop-filter: blur(10px);
     border-radius:20px;
     padding:15px;
@@ -183,6 +182,35 @@ button:hover{
 <header>
 🍽️ Amma Mess
 </header>
+
+<div class="search-box">
+    <input 
+        type="text"
+        id="search"
+        placeholder="Search food..."
+        onkeyup="searchFood()"
+    >
+</div>
+
+<div class="categories">
+
+<button onclick="filterCategory('All')">
+All
+</button>
+
+<button onclick="filterCategory('Breakfast')">
+Breakfast
+</button>
+
+<button onclick="filterCategory('Meals')">
+Meals
+</button>
+
+<button onclick="filterCategory('Drinks')">
+Drinks
+</button>
+
+</div> 
 
 <div class="container" id="menu"></div>
 
