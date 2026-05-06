@@ -8,10 +8,6 @@
 
 <style>
 
-<div class="floating-cart">
-🛒
-</div>
-
 body{
     margin:0;
     font-family:Arial, sans-serif;
@@ -30,28 +26,6 @@ header{
     font-weight:bold;
     box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
-
-<button onclick="filterCategory('All')">
-All
-</button>
-
-<button onclick="filterCategory('Breakfast')">
-Breakfast
-</button>
-
-<button onclick="filterCategory('Lunch')">
-Lunch
-</button>
-
-<button onclick="filterCategory('Cold Drinks')">
-Cold Drinks
-</button>
-
-<button onclick="filterCategory('Beverage')">
-Beverage 
-</button>
-
-</div>
     
 .container{
     padding:15px;
@@ -84,7 +58,8 @@ Beverage
     box-shadow:0 4px 15px rgba(0,0,0,0.3);
 }
 
-
+.card{
+    background: rgba(255,255,255,0.8);
     backdrop-filter: blur(10px);
     border-radius:20px;
     padding:15px;
@@ -178,6 +153,10 @@ button:hover{
 </head>
 
 <body>
+
+<div class="floating-cart">
+🛒
+</div> 
 
 <header>
 🍽️ Amma Mess
@@ -281,29 +260,29 @@ const foods = [
 },
 
 {
-    name:"Sounth Indian Meals",
-    category:"Lunch",
+    name:"South Indian Meals",
+    category:"Meals",
     price:120,
     image:"https://i.pinimg.com/736x/05/a8/2a/05a82ad4d9b3a51c6266578a2ff4d796.jpg"
 },
 
 {
     name:"North Indian Meals",
-    category:"Lunch",
+    category:"Meals",
     price:150,
     image:"https://i1-e.pinimg.com/736x/26/24/b4/2624b46fbf64636d9359e8cd7b2251f4.jpg"
 },
 
 {
     name:"Fresh Juice",
-    category:"Cool Drinks",
+    category:"Drinks",
     price:80,
     image:"https://i.pinimg.com/736x/36/b6/fe/36b6fe3850a7c6e1b3e680c59da4fa03.jpg"
 },
   
 {
     name:"Filter Coffee",
-    category:"Hot Drinks",
+    category:"Beverage",
     price:30,
     image:"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800"
 }
