@@ -19,6 +19,16 @@
     text-shadow:2px 2px 8px rgba(0,0,0,0.4);
 }
 
+.cart-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#f5f5f5;
+    padding:10px;
+    margin-bottom:10px;
+    border-radius:10px;
+}    
+
 .logo{
     width:70px;
     height:70px;
@@ -390,6 +400,14 @@ function addToCart(index){
 
 }
 
+function removeFromCart(index){
+
+    cart.splice(index,1);
+
+    updateCart();
+
+}    
+ 
 function payPhonePe(){
 
 let total = cart.reduce(
@@ -422,7 +440,15 @@ function updateCart(){
     cart.forEach(food=>{
 
         items += `
-        <p>${food.name} - ₹${food.price}</p>
+       <div class="cart-item">
+
+${food.name} - ₹${food.price}
+
+<button onclick="removeFromCart(${index})">
+➖
+</button>
+
+</div>
         `;
 
         total += food.price;
