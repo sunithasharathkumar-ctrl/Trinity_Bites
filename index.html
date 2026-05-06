@@ -296,7 +296,24 @@ function searchFood(){
 
 function payNow(){
 
-let total = 150;
+let total = cart.reduce(
+(sum,item)=> sum + item.price,
+0
+);
+
+function payNow(){
+
+let total = cart.reduce(
+(sum,item)=> sum + item.price,
+0
+);
+
+let upiLink =
+`upi://pay?pa=9876543210@ybl&pn=SLVUpahara&am=${total}`;
+
+window.location.href = upiLink;
+
+}
 
 let upiLink =
 `upi://pay?pa=9110656160@ybl&pn=SLVUpahara&am=${total}`;
