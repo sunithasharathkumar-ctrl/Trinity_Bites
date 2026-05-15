@@ -1,0 +1,28 @@
+.hero-heading {
+  background: linear-gradient(180deg, #646973 0%, #BBCCD7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.contact-btn {
+  background: linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%);
+  box-shadow: 0px 4px 4px rgba(181, 1, 167, 0.25), inset 4px 4px 12px #7721B1;
+  outline: 2px solid white;
+  outline-offset: -3px;
+}
+
+.live-project-btn {
+  border: 2px solid #D7E2EA;
+  color: #D7E2EA;
+}
+.live-project-btn:hover {
+  background-color: rgba(215, 226, 234, 0.1);
+}
+
+.char {
+  opacity: 0.2;
+}
+
+.sticky-card {
+  position: sticky;
+}
