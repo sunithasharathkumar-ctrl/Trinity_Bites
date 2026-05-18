@@ -1,0 +1,2066 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WithMe — Book a Human</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #fafaf8;
+      --cream: #f5f2ea;
+      --accent: #ff4f2b;
+      --accent2: #7b5cfa;
+      --muted: #888580;
+      --card-bg: #111110;
+      --border: rgba(255, 255, 255, 0.08);
+      --font-display: 'Clash Display', sans-serif;
+      --font-body: 'Cabinet Grotesk', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ───── NAV ───── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 5%;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+    }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #fff !important;
+      padding: 10px 22px;
+      border-radius: 100px;
+      font-weight: 700 !important;
+      font-size: 13px !important;
+      transition: transform 0.2s, background 0.2s !important;
+    }
+
+    .nav-cta:hover {
+      background: #e03d1f !important;
+      transform: scale(1.04);
+    }
+
+    /* ───── HERO ───── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 5% 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(123, 92, 250, 0.18) 0%, transparent 70%);
+      top: -100px;
+      right: -150px;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255, 79, 43, 0.12) 0%, transparent 70%);
+      bottom: 0;
+      left: -100px;
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 79, 43, 0.12);
+      border: 1px solid rgba(255, 79, 43, 0.3);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+      width: fit-content;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-tag .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(0.8);
+      }
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 8vw, 96px);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -2px;
+      max-width: 820px;
+      animation: fadeUp 0.7s ease 0.1s both;
+    }
+
+    h1 .highlight {
+      color: var(--accent);
+      position: relative;
+    }
+
+    h1 .highlight2 {
+      color: var(--accent2);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.55);
+      max-width: 480px;
+      margin: 1.8rem 0 2.8rem;
+      font-weight: 300;
+      line-height: 1.7;
+      animation: fadeUp 0.7s ease 0.2s both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.7s ease 0.3s both;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 16px 36px;
+      border-radius: 100px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: #e03d1f;
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--white);
+      padding: 16px 36px;
+      border-radius: 100px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(255, 255, 255, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .hero-stat-row {
+      display: flex;
+      gap: 3rem;
+      margin-top: 4rem;
+      animation: fadeUp 0.7s ease 0.4s both;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: var(--white);
+    }
+
+    .hero-stat span {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.4);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ───── MARQUEE ───── */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      background: #0d0d0c;
+    }
+
+    .marquee {
+      display: flex;
+      gap: 2.5rem;
+      animation: marquee 22s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.35);
+      white-space: nowrap;
+    }
+
+    .marquee-item .dot-m {
+      color: var(--accent);
+      font-size: 18px;
+    }
+
+    @keyframes marquee {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* ───── SECTION SHARED ───── */
+    section {
+      padding: 100px 5%;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 5vw, 56px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      max-width: 640px;
+    }
+
+    .section-sub {
+      color: rgba(255, 255, 255, 0.45);
+      font-size: 16px;
+      max-width: 480px;
+      margin-top: 1rem;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    /* ───── HOW IT WORKS ───── */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5px;
+      margin-top: 4rem;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .how-card {
+      background: var(--card-bg);
+      padding: 2.5rem 2rem;
+      position: relative;
+      transition: background 0.3s;
+    }
+
+    .how-card:hover {
+      background: #181817;
+    }
+
+    .how-num {
+      font-family: var(--font-display);
+      font-size: 64px;
+      font-weight: 700;
+      letter-spacing: -3px;
+      color: rgba(255, 255, 255, 0.06);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .how-icon {
+      font-size: 28px;
+      margin-bottom: 1.2rem;
+    }
+
+    .how-card h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.3px;
+    }
+
+    .how-card p {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1.7;
+    }
+
+    /* ───── CATEGORIES ───── */
+    .cat-section {
+      background: #0d0d0c;
+    }
+
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-top: 3rem;
+    }
+
+    .cat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.8rem 1.2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+      color: var(--white);
+      display: block;
+    }
+
+    .cat-card:hover {
+      border-color: rgba(255, 79, 43, 0.5);
+      transform: translateY(-4px);
+    }
+
+    .cat-emoji {
+      font-size: 32px;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .cat-card h4 {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .cat-card span {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* ───── PROFILES ───── */
+    .profiles-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 3rem;
+    }
+
+    .profile-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.25s, border-color 0.25s;
+      cursor: pointer;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(123, 92, 250, 0.4);
+    }
+
+    .profile-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      background: linear-gradient(135deg, #1e1c3a, #2d1f3a);
+      position: relative;
+    }
+
+    .profile-img-placeholder {
+      width: 100%;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pi-1 {
+      background: linear-gradient(135deg, #1a1240, #2d1f5a);
+    }
+
+    .pi-2 {
+      background: linear-gradient(135deg, #1f2a1a, #0f4a2a);
+    }
+
+    .pi-3 {
+      background: linear-gradient(135deg, #2a1a1a, #4a1f0f);
+    }
+
+    .pi-4 {
+      background: linear-gradient(135deg, #1a2040, #0f2a5a);
+    }
+
+    .profile-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(10, 10, 10, 0.75);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #4ade80;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .profile-badge::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      background: #4ade80;
+      border-radius: 50%;
+    }
+
+    .profile-badge.offline {
+      color: #ef4444;
+    }
+
+    .profile-badge.offline::before {
+      background: #ef4444;
+    }
+
+    .profile-info {
+      padding: 1.2rem 1.4rem 1.4rem;
+    }
+
+    .profile-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.4rem;
+    }
+
+    .profile-name {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .profile-rate {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .profile-bio {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .profile-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 1rem;
+    }
+
+    .tag {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 500;
+    }
+
+    .profile-footer {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .stars {
+      color: #f5c518;
+      letter-spacing: -1px;
+    }
+
+    .btn-book {
+      width: 100%;
+      background: rgba(123, 92, 250, 0.12);
+      border: 1px solid rgba(123, 92, 250, 0.3);
+      color: #b8a6fa;
+      padding: 11px;
+      border-radius: 12px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background 0.2s, border-color 0.2s;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-book:hover {
+      background: rgba(123, 92, 250, 0.25);
+      border-color: rgba(123, 92, 250, 0.5);
+    }
+
+    /* ───── TESTIMONIALS ───── */
+    .testimonial-section {
+      background: #0d0d0c;
+    }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 3rem;
+    }
+
+    .testi-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+    }
+
+    .testi-stars {
+      color: #f5c518;
+      margin-bottom: 1rem;
+      font-size: 14px;
+    }
+
+    .testi-text {
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .testi-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: var(--font-display);
+      flex-shrink: 0;
+    }
+
+    .av-1 {
+      background: linear-gradient(135deg, #7b5cfa, #4a2fb0);
+      color: #d4c8ff;
+    }
+
+    .av-2 {
+      background: linear-gradient(135deg, #ff4f2b, #a01f0a);
+      color: #ffc4b5;
+    }
+
+    .av-3 {
+      background: linear-gradient(135deg, #1a9e75, #0a5a45);
+      color: #a0e8d0;
+    }
+
+    .testi-author-info strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .testi-author-info span {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* ───── SAFETY ───── */
+    .safety-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      margin-top: 4rem;
+    }
+
+    .safety-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .safety-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .safety-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 79, 43, 0.1);
+      border: 1px solid rgba(255, 79, 43, 0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .safety-item h4 {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .safety-item p {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1.7;
+    }
+
+    .safety-visual {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2.5rem;
+      text-align: center;
+    }
+
+    .safety-big-icon {
+      font-size: 80px;
+      margin-bottom: 1rem;
+    }
+
+    .safety-visual h3 {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.5px;
+    }
+
+    .safety-visual p {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1.7;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      padding: 8px 16px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-green {
+      background: rgba(74, 222, 128, 0.1);
+      border: 1px solid rgba(74, 222, 128, 0.3);
+      color: #4ade80;
+    }
+
+    .badge-blue {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #60a5fa;
+    }
+
+    .badge-purple {
+      background: rgba(123, 92, 250, 0.1);
+      border: 1px solid rgba(123, 92, 250, 0.3);
+      color: #b8a6fa;
+    }
+
+    /* ───── PRICING ───── */
+    .pricing-section {
+      background: #0d0d0c;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 3rem;
+    }
+
+    .pricing-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      position: relative;
+      transition: transform 0.2s;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .pricing-card.featured {
+      border-color: var(--accent2);
+      background: rgba(123, 92, 250, 0.07);
+    }
+
+    .featured-badge {
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent2);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 100px;
+    }
+
+    .pricing-name {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .pricing-desc {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.35);
+      margin-bottom: 1.5rem;
+    }
+
+    .pricing-price {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: -2px;
+      margin-bottom: 0.3rem;
+      line-height: 1;
+    }
+
+    .pricing-per {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.3);
+      margin-bottom: 1.8rem;
+    }
+
+    .pricing-features {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .pricing-features li {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      padding: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .pricing-features li:last-child {
+      border-bottom: none;
+    }
+
+    .pricing-features li::before {
+      content: '✓';
+      color: #4ade80;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    /* ───── CTA ───── */
+    .cta-section {
+      text-align: center;
+      padding: 120px 5%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      width: 800px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(123, 92, 250, 0.15) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 700;
+      letter-spacing: -2px;
+      line-height: 1.05;
+      max-width: 700px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .cta-sub {
+      font-size: 17px;
+      color: rgba(255, 255, 255, 0.4);
+      max-width: 440px;
+      margin: 0 auto 2.5rem;
+      font-weight: 300;
+    }
+
+    /* ───── FOOTER ───── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: gap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .footer-logo span {
+      color: var(--accent);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.35);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--white);
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* ───── BOOKING MODAL ───── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: #141413;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 500px;
+      position: relative;
+      animation: modalIn 0.3s ease;
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95) translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: none;
+      color: var(--white);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .modal h2 {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal p {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 1.8rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: rgba(123, 92, 250, 0.5);
+    }
+
+    .form-group select option {
+      background: #141413;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .upload-box {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--white);
+      font-size: 14px;
+    }
+
+    .upload-box:hover {
+      border-color: var(--accent2);
+      background: rgba(123, 92, 250, 0.05);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--accent2);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-submit:hover {
+      background: #6a4de0;
+      transform: translateY(-1px);
+    }
+
+    /* ───── RESPONSIVE ───── */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      h1 {
+        letter-spacing: -1px;
+      }
+
+      .safety-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .safety-visual {
+        order: -1;
+      }
+
+      footer {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">With<span>Me</span></div>
+    <ul class="nav-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#explore">Explore</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#" class="nav-cta" onclick="openModal()">Book Now</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag">
+      <span class="dot"></span>
+      Live in 12+ cities across India
+    </div>
+    <h1>You don't have to<br>do life <span class="highlight">alone.</span></h1>
+    <p class="hero-sub">Book a real human — a companion for a movie night, a gym buddy, an errand partner, or just
+      someone to talk to. Real people. Real moments.</p>
+    <div class="hero-actions">
+      <a href="#explore" class="btn-primary">Find a Human →</a>
+      <a href="#how" class="btn-ghost">See how it works</a>
+    </div>
+    <div class="hero-stat-row">
+      <div class="hero-stat">
+        <strong>12K+</strong>
+        <span>Companions</span>
+      </div>
+      <div class="hero-stat">
+        <strong>98%</strong>
+        <span>Happy Users</span>
+      </div>
+      <div class="hero-stat">
+        <strong>4.9★</strong>
+        <span>Avg Rating</span>
+      </div>
+      <div class="hero-stat">
+        <strong>24/7</strong>
+        <span>Availability</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee">
+      <span class="marquee-item"><span class="dot-m">•</span> Movie Buddy</span>
+      <span class="marquee-item"><span class="dot-m">•</span> Gym Partner</span>
+      <span class="marquee-item"><span class="dot-m">•</span> Travel Companion</span>
+      <span class="marquee-item"><span class="dot-m">•</span> Study Mate</span>
+      <span class="marquee-item"><span class="dot-m">•</span> Event Plus One</span>
+      <span class="marquee-item"><span class="dot-m">•</span> Errand Helper</span>
+      <span class="marquee-item"><span class="dot-m">•</span> Food Explorer</span>
+      <span class="marquee-item"><span class="dot-m">•</span> Late Night Listener</span>
+      <span class="marquee-item"><span class="dot-m">•</span> Shopping Buddy</span>
+      <span class="marquee-item"><span class="dot-m">•</span> Work Accountability</span>
+      <!-- duplicate for infinite scroll -->
+      <span class="marquee-item"><span class="dot-m">•</span> Movie Buddy</span>
+      <span class="marquee-item"><span class="dot-m">•</span> Gym Partner</span>
+      <span class="marquee-item"><span class="dot-m">•</span> Travel Companion</span>
+      <span class="marquee-item"><span class="dot-m">•</span> Study Mate</span>
+      <span class="marquee-item"><span class="dot-m">•</span> Event Plus One</span>
+      <span class="marquee-item"><span class="dot-m">•</span> Errand Helper</span>
+      <span class="marquee-item"><span class="dot-m">•</span> Food Explorer</span>
+      <span class="marquee-item"><span class="dot-m">•</span> Late Night Listener</span>
+      <span class="marquee-item"><span class="dot-m">•</span> Shopping Buddy</span>
+      <span class="marquee-item"><span class="dot-m">•</span> Work Accountability</span>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="section-label">Process</div>
+    <div class="section-title">Three steps to your perfect human</div>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-num">01</div>
+        <div class="how-icon">🔍</div>
+        <h3>Browse & Filter</h3>
+        <p>Search by vibe, activity, city, or availability. Every companion has a verified profile, ratings, and a short
+          intro video.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">02</div>
+        <div class="how-icon">📅</div>
+        <h3>Book a Slot</h3>
+        <p>Pick a time that works. Bookings start from 1 hour. Pay securely upfront — no awkward cash exchanges.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">03</div>
+        <div class="how-icon">🤝</div>
+        <h3>Meet & Enjoy</h3>
+        <p>Meet at the agreed spot. Have the time. Rate your experience and rebook your favourites anytime.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">04</div>
+        <div class="how-icon">⭐</div>
+        <h3>Rate & Return</h3>
+        <p>Leave a review, earn loyalty points, and build your crew of go-to companions for every occasion.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section id="explore" class="cat-section">
+    <div class="section-label">Activities</div>
+    <div class="section-title">Whatever you need, we've got a human for it</div>
+    <div class="cat-grid">
+      <a class="cat-card" href="#" onclick="openModal(); return false;">
+        <span class="cat-emoji">🎬</span>
+        <h4>Movies & Shows</h4>
+        <span>2,340 companions</span>
+      </a>
+      <a class="cat-card" href="#" onclick="openModal(); return false;">
+        <span class="cat-emoji">💪</span>
+        <h4>Gym & Fitness</h4>
+        <span>1,890 companions</span>
+      </a>
+      <a class="cat-card" href="#" onclick="openModal(); return false;">
+        <span class="cat-emoji">✈️</span>
+        <h4>Travel Buddy</h4>
+        <span>980 companions</span>
+      </a>
+      <a class="cat-card" href="#" onclick="openModal(); return false;">
+        <span class="cat-emoji">📚</span>
+        <h4>Study Partner</h4>
+        <span>3,100 companions</span>
+      </a>
+      <a class="cat-card" href="#" onclick="openModal(); return false;">
+        <span class="cat-emoji">🍜</span>
+        <h4>Food Trips</h4>
+        <span>1,450 companions</span>
+      </a>
+      <a class="cat-card" href="#" onclick="openModal(); return false;">
+        <span class="cat-emoji">🎉</span>
+        <h4>Events & Parties</h4>
+        <span>760 companions</span>
+      </a>
+      <a class="cat-card" href="#" onclick="openModal(); return false;">
+        <span class="cat-emoji">🛒</span>
+        <h4>Shopping</h4>
+        <span>2,010 companions</span>
+      </a>
+      <a class="cat-card" href="#" onclick="openModal(); return false;">
+        <span class="cat-emoji">🏛️</span>
+        <h4>Temple</h4>
+        <span>2,253 companions</span>
+      </a>
+      <a class="cat-card" href="#" onclick="openModal(); return false;">
+        <span class="cat-emoji">🌙</span>
+        <h4>Late Night Chat</h4>
+        <span>890 companions</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- PROFILES -->
+  <section>
+    <div class="profiles-header">
+      <div>
+        <div class="section-label">Featured</div>
+        <div class="section-title">Top companions near you</div>
+      </div>
+      <a href="#" class="btn-ghost" style="white-space:nowrap;">See all →</a>
+    </div>
+    <div class="profile-grid">
+
+      <div class="profile-card">
+        <div style="position:relative;">
+          <img class="profile-img"
+            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
+            alt="Ananya" style="width: 100%; height: 260px; object-fit: cover;">
+          <div class="profile-badge online">Online</div>
+        </div>
+        <div class="profile-info">
+          <div class="profile-top">
+            <div class="profile-name">Ananya S., 24</div>
+            <div class="profile-rate">₹299/hr</div>
+          </div>
+          <div class="profile-bio">
+            <strong style="color:#fff;">💼 Occupation:</strong> Graphic Designer<br>
+            <strong style="color:#fff;">🎨 Hobbies:</strong> Painting, Café hopping<br>
+            <strong style="color:#fff;">✨ Interests:</strong> Deep conversations about art and finding the best cold
+            coffee in Bangalore.
+          </div>
+          <div class="profile-tags">
+            <span class="tag">Study</span>
+            <span class="tag">Cafés</span>
+            <span class="tag">Art</span>
+          </div>
+          <div class="profile-footer">
+            <span class="stars">★★★★★</span>
+            <span>4.97 · 210 sessions</span>
+          </div>
+          <button class="btn-book" onclick="openModal('Ananya S.')">Book Ananya →</button>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <div style="position:relative;">
+          <img class="profile-img" src="sharath.jpg" alt="Sharath"
+            style="width: 100%; height: 260px; object-fit: cover; object-position: top;">
+          <div class="profile-badge">Online now</div>
+        </div>
+        <div class="profile-info">
+          <div class="profile-top">
+            <div class="profile-name">Sharath, 30</div>
+            <div class="profile-rate">₹349/hr</div>
+          </div>
+          <div class="profile-bio">
+            <strong style="color:#fff;">💼 Occupation:</strong> Fitness Coach<br>
+            <strong style="color:#fff;">🏃 Hobbies:</strong> Trekking, MMA, Gaming<br>
+            <strong style="color:#fff;">✨ Interests:</strong> Pushing you to hit your PR at the gym or just chilling
+            over a good video game.
+          </div>
+          <div class="profile-tags">
+            <span class="tag">Gym</span>
+            <span class="tag">Hiking</span>
+            <span class="tag">Gaming</span>
+          </div>
+          <div class="profile-footer">
+            <span class="stars">★★★★★</span>
+            <span>4.95 · 178 sessions</span>
+          </div>
+          <button class="btn-book" onclick="openModal('Sharath R.')">Book Sharath R →</button>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <div style="position:relative;">
+          <img class="profile-img"
+            src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=400&q=80"
+            alt="Priya" style="width: 100%; height: 260px; object-fit: cover;">
+          <div class="profile-badge">Online now</div>
+        </div>
+        <div class="profile-info">
+          <div class="profile-top">
+            <div class="profile-name">Priya K., 25</div>
+            <div class="profile-rate">₹399/hr</div>
+          </div>
+          <div class="profile-bio">
+            <strong style="color:#fff;">💼 Occupation:</strong> Software Engineer<br>
+            <strong style="color:#fff;">🍳 Hobbies:</strong> Trying street food, Live Music<br>
+            <strong style="color:#fff;">✨ Interests:</strong> Exploring every street corner in the city and rating the
+            best local biryani spots.
+          </div>
+          <div class="profile-tags">
+            <span class="tag">Food</span>
+            <span class="tag">Travel</span>
+            <span class="tag">Music</span>
+          </div>
+          <div class="profile-footer">
+            <span class="stars">★★★★★</span>
+            <span>4.98 · 305 sessions</span>
+          </div>
+          <button class="btn-book" onclick="openModal('Priya K.')">Book Priya →</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonial-section">
+    <div class="section-label">Testimonials</div>
+    <div class="section-title">Real talk from real users</div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Moved to Bangalore alone and was honestly struggling with loneliness. Found a study buddy
+          through WithMe and now we meet every weekend at a café. Changed everything."</p>
+        <div class="testi-author">
+          <div class="testi-avatar av-1">A</div>
+          <div class="testi-author-info">
+            <strong>Arjun, 23</strong>
+            <span>Software Engineer, Bangalore</span>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"I needed a gym partner to stay consistent. Booked Rohan for 2 weeks and honestly he
+          became a real friend. Best ₹700 I've ever spent."</p>
+        <div class="testi-author">
+          <div class="testi-avatar av-2">S</div>
+          <div class="testi-author-info">
+            <strong>Sneha, 21</strong>
+            <span>Design Student, Mumbai</span>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Used this for a solo work trip to Hyderabad. Had someone show me around for a day. Ate at
+          places I'd never find on Google. 10/10 would book again."</p>
+        <div class="testi-author">
+          <div class="testi-avatar av-3">K</div>
+          <div class="testi-author-info">
+            <strong>Karan, 28</strong>
+            <span>Product Manager, Delhi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAFETY -->
+  <section>
+    <div class="section-label">Safety First</div>
+    <div class="section-title">We take safety seriously — always.</div>
+    <div class="safety-grid">
+      <div class="safety-items">
+        <div class="safety-item">
+          <div class="safety-icon">🪪</div>
+          <div>
+            <h4>Government ID Verified</h4>
+            <p>Every companion's identity is verified with Aadhaar or Passport before they can accept bookings.</p>
+          </div>
+        </div>
+        <div class="safety-item">
+          <div class="safety-icon">📍</div>
+          <div>
+            <h4>Live Location Sharing</h4>
+            <p>Share your live location with a trusted contact for every session. Built right into the app.</p>
+          </div>
+        </div>
+        <div class="safety-item">
+          <div class="safety-icon">🛡️</div>
+          <div>
+            <h4>Community Guidelines</h4>
+            <p>Strict code of conduct for all users. Instant bans for violations. Zero tolerance policy.</p>
+          </div>
+        </div>
+        <div class="safety-item">
+          <div class="safety-icon">💬</div>
+          <div>
+            <h4>24/7 Support Team</h4>
+            <p>Real humans on our support team available around the clock. Report anything, anytime.</p>
+          </div>
+        </div>
+      </div>
+      <div class="safety-visual">
+        <div class="safety-big-icon">🔒</div>
+        <h3>Your safety is our product.</h3>
+        <p>Every feature we build starts with one question: does this make our users safer? We don't compromise.</p>
+        <div class="badge-row">
+          <span class="badge badge-green">ID Verified</span>
+          <span class="badge badge-blue">Background Checked</span>
+          <span class="badge badge-purple">Community Rated</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="pricing-section">
+    <div class="section-label">Pricing</div>
+    <div class="section-title">Pick your plan. Cancel anytime.</div>
+    <div class="pricing-grid">
+
+      <div class="pricing-card">
+        <div class="pricing-name">Pay-as-you-go</div>
+        <div class="pricing-desc">No commitment. Perfect to try out.</div>
+        <div class="pricing-price">₹0</div>
+        <div class="pricing-per">Free to join · companions from ₹199/hr</div>
+        <ul class="pricing-features">
+          <li>Browse all profiles</li>
+          <li>Book on-demand</li>
+          <li>In-app messaging</li>
+          <li>Safe rating system</li>
+        </ul>
+        <button class="btn-book" onclick="openModal()">Get Started</button>
+      </div>
+
+      <div class="pricing-card featured">
+        <div class="featured-badge">Most Popular</div>
+        <div class="pricing-name">WithMe Pass</div>
+        <div class="pricing-desc">For those who want more human in their life.</div>
+        <div class="pricing-price">₹499</div>
+        <div class="pricing-per">per month</div>
+        <ul class="pricing-features">
+          <li>20% off all bookings</li>
+          <li>Priority matching</li>
+          <li>Save favourite companions</li>
+          <li>Exclusive companion access</li>
+          <li>Loyalty points & rewards</li>
+        </ul>
+        <button class="btn-submit" onclick="openModal()">Get WithMe Pass →</button>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-name">Earn as a Companion</div>
+        <div class="pricing-desc">Turn your free time into income.</div>
+        <div class="pricing-price">₹0</div>
+        <div class="pricing-per">Free to join · keep 85% of earnings</div>
+        <ul class="pricing-features">
+          <li>Set your own rates</li>
+          <li>Flexible availability</li>
+          <li>Weekly payouts</li>
+          <li>Companion community access</li>
+        </ul>
+        <button class="btn-book" onclick="openCompanionModal()">Become a Companion</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="section-label">Get Started</div>
+    <div class="cta-title">Stop scrolling. Start living.</div>
+    <p class="cta-sub">Download WithMe and book your first human in under 3 minutes. First session is on us.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="#" class="btn-primary" onclick="openModal(); return false;">Book Your First Human →</a>
+      <a href="#" class="btn-ghost" onclick="openCompanionModal(); return false;">Join as a Companion</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">With<span>Me</span></div>
+    <ul class="footer-links">
+      <li><a href="#">About</a></li>
+      <li><a href="#">Safety</a></li>
+      <li><a href="#">Careers</a></li>
+      <li><a href="#">Press</a></li>
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+    </ul>
+    <div class="footer-copy">© 2025 WithMe. Made with ♥ in India.</div>
+  </footer>
+
+  <!-- BOOKING MODAL -->
+  <div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h2>Book a Human</h2>
+      <p id="modal-subtitle">Fill in a few details and we'll match you with the perfect companion.</p>
+      <input type="hidden" id="requested-companion" value="">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="book-name" placeholder="Priya Shetty">
+        </div>
+        <div class="form-group">
+          <label>WhatsApp Number</label>
+          <input type="tel" id="book-phone" placeholder="9876543210">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>City</label>
+          <select id="book-city">
+            <option>Bangalore</option>
+            <option>Mumbai</option>
+            <option>Delhi</option>
+            <option>Hyderabad</option>
+            <option>Chennai</option>
+            <option>Pune</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Activity</label>
+          <select id="book-activity">
+            <option>Study Partner</option>
+            <option>Gym Buddy</option>
+            <option>Food Trip</option>
+            <option>Movie Night</option>
+            <option>Travel</option>
+            <option>Just Chat</option>
+            <option>Temple</option>
+            <option>Shopping</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" id="book-date">
+        </div>
+        <div class="form-group">
+          <label>Time</label>
+          <input type="time" id="book-time">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Duration</label>
+        <select id="book-duration">
+          <option>1 hour</option>
+          <option>2 hours</option>
+          <option>Half day (4hr)</option>
+          <option>Full day (8hr)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Anything specific? (optional)</label>
+        <textarea id="book-notes" placeholder="Tell us a bit about what you're looking for..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Identity Verification (Mandatory for Safety)</label>
+        <div class="upload-box" onclick="document.getElementById('id-upload').click()">
+          <span style="font-size: 24px;">🪪</span>
+          <span id="upload-text">Upload Aadhaar / Govt ID (PDF or Image)</span>
+        </div>
+        <input type="file" id="id-upload" accept="image/*,.pdf" style="display:none"
+          onchange="document.getElementById('upload-text').textContent = this.files[0] ? this.files[0].name : 'Upload Aadhaar / Govt ID (PDF or Image)'">
+        <p style="font-size: 11px; color: #4ade80; margin-top: 6px; margin-bottom: 0;">🔒 Your document is securely
+          encrypted and manually verified.</p>
+      </div>
+
+      <button type="button" class="btn-submit" onclick="handleBooking(event)">Find My Companion →</button>
+    </div>
+  </div>
+
+  <!-- COMPANION APPLICATION MODAL -->
+  <div class="modal-overlay" id="companion-modal" onclick="closeCompanionModalOutside(event)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeCompanionModal()">✕</button>
+      <h2>Join as a Companion</h2>
+      <p>Apply to become a verified WithMe companion and start earning.</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="comp-name" placeholder="Priya or Manu">
+        </div>
+        <div class="form-group">
+          <label>WhatsApp Number</label>
+          <input type="tel" id="comp-phone" placeholder="9876543210">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>City</label>
+          <select id="comp-city">
+            <option>Bangalore</option>
+            <option>Mumbai</option>
+            <option>Delhi</option>
+            <option>Hyderabad</option>
+            <option>Chennai</option>
+            <option>Pune</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Gender & Age</label>
+          <input type="text" id="comp-demographics" placeholder="e.g. Female, 24">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Occupation</label>
+          <input type="text" id="comp-occupation" placeholder="e.g. Graphic Designer">
+        </div>
+        <div class="form-group">
+          <label>Hobbies</label>
+          <input type="text" id="comp-hobbies" placeholder="e.g. Painting, Café hopping">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Key Interests</label>
+        <input type="text" id="comp-interests" placeholder="e.g. Deep conversations about art">
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 5px;">
+        <div class="form-group" style="margin-bottom:0;">
+          <label>Profile Photo</label>
+          <div class="upload-box" style="padding: 1rem;" onclick="document.getElementById('comp-photo-upload').click()">
+            <span style="font-size: 20px;">📸</span>
+            <span id="comp-photo-text" style="font-size: 13px;">Upload Photo</span>
+          </div>
+          <input type="file" id="comp-photo-upload" accept="image/*" style="display:none"
+            onchange="document.getElementById('comp-photo-text').textContent = this.files[0] ? this.files[0].name : 'Upload Photo'">
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label>Aadhaar Card</label>
+          <div class="upload-box" style="padding: 1rem;" onclick="document.getElementById('comp-id-upload').click()">
+            <span style="font-size: 20px;">🪪</span>
+            <span id="comp-upload-text" style="font-size: 13px;">Upload Aadhaar</span>
+          </div>
+          <input type="file" id="comp-id-upload" accept="image/*,.pdf" style="display:none"
+            onchange="document.getElementById('comp-upload-text').textContent = this.files[0] ? this.files[0].name : 'Upload Aadhaar'">
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label>Driving Licence</label>
+          <div class="upload-box" style="padding: 1rem;" onclick="document.getElementById('comp-dl-upload').click()">
+            <span style="font-size: 20px;">🚗</span>
+            <span id="comp-dl-text" style="font-size: 13px;">Upload DL</span>
+          </div>
+          <input type="file" id="comp-dl-upload" accept="image/*,.pdf" style="display:none"
+            onchange="document.getElementById('comp-dl-text').textContent = this.files[0] ? this.files[0].name : 'Upload DL'">
+        </div>
+      </div>
+      <p style="font-size: 11px; color: #4ade80; margin-top: 2px; margin-bottom: 15px;">🔒 IDs are confidential. DL is
+        recommended for better face verification.</p>
+      <button type="button" class="btn-submit" onclick="handleCompanionApply(event)">Submit Application →</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Initialize Supabase
+    const { createClient } = supabase;
+    const supabaseUrl = 'https://ehkxbyrdurlxecjfudrn.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVoa3hieXJkdXJseGVjamZ1ZHJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMjQ0MTUsImV4cCI6MjA5NDYwMDQxNX0.41EHIvfrAX46QcjzHB121PPpT573KAvem4A6BUGr-WQ';
+    const supabaseClient = createClient(supabaseUrl, supabaseKey);
+
+    function openModal(companionName = '') {
+      document.getElementById('modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      const title = document.querySelector('#modal h2');
+      const subtitle = document.getElementById('modal-subtitle');
+      document.getElementById('requested-companion').value = companionName;
+
+      if (companionName) {
+        title.textContent = `Book ${companionName}`;
+        subtitle.textContent = `Fill in your details below to request a session with ${companionName}.`;
+      } else {
+        title.textContent = `Book a Human`;
+        subtitle.textContent = `Fill in a few details and we'll match you with the perfect companion.`;
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function closeModalOutside(e) {
+      if (e.target === document.getElementById('modal')) closeModal();
+    }
+
+    // Companion Modal Logic
+    function openCompanionModal() {
+      document.getElementById('companion-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCompanionModal() {
+      document.getElementById('companion-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function closeCompanionModalOutside(e) {
+      if (e.target === document.getElementById('companion-modal')) closeCompanionModal();
+    }
+
+    async function handleBooking(event) {
+      if (event) event.preventDefault();
+
+      const fileInput = document.getElementById('id-upload');
+      const name = document.getElementById('book-name').value;
+      let phone = document.getElementById('book-phone').value;
+      const date = document.getElementById('book-date').value;
+      const time = document.getElementById('book-time').value;
+
+      if (!name || !phone || !date || !time) {
+        alert("Please fill in your Name, WhatsApp Number, Date, and Time.");
+        return;
+      }
+
+      if (!fileInput || !fileInput.files.length) {
+        alert("Safety First! 🛡️\n\nPlease upload a valid Government ID to verify your identity before booking a companion.");
+        return;
+      }
+
+      if (supabaseKey === 'YOUR_SUPABASE_ANON_KEY_HERE') {
+        alert("Please add your Supabase Anon Key to the code first!");
+        return;
+      }
+
+      const btn = document.querySelector('.btn-submit');
+      btn.textContent = 'Securely Uploading ID... ✨';
+      btn.disabled = true;
+
+      try {
+        const file = fileInput.files[0];
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+
+        // 1. Upload ID to Supabase Storage
+        const { data: uploadData, error: uploadError } = await supabaseClient.storage
+          .from('id_documents')
+          .upload(fileName, file);
+
+        if (uploadError) throw uploadError;
+
+        // Get public URL for the uploaded ID
+        const { data: { publicUrl } } = supabaseClient.storage
+          .from('id_documents')
+          .getPublicUrl(fileName);
+
+        btn.textContent = 'Saving Booking Details... 🔄';
+
+        // Format the phone number into a WhatsApp clickable link
+        const cleanPhone = phone.replace(/[^0-9]/g, '');
+        const message = encodeURIComponent("Hello! Your companion slot for WithMe is confirmed.");
+        const whatsappLink = `https://wa.me/${cleanPhone}?text=${message}`;
+
+        // Add requested companion to notes
+        let finalNotes = document.getElementById('book-notes').value;
+        const requestedCompanion = document.getElementById('requested-companion').value;
+        if (requestedCompanion) {
+          finalNotes = `[REQUESTED COMPANION: ${requestedCompanion}] - ` + finalNotes;
+        }
+
+        // 2. Save Booking to Database
+        const bookingData = {
+          name: name,
+          phone: whatsappLink, // Saves as a clickable WhatsApp link!
+          city: document.getElementById('book-city').value,
+          activity: document.getElementById('book-activity').value,
+          date: date,
+          time: time,
+          duration: document.getElementById('book-duration').value,
+          notes: finalNotes,
+          id_url: publicUrl,
+          status: 'Pending Verification'
+        };
+
+        const { error: dbError } = await supabaseClient
+          .from('bookings')
+          .insert([bookingData]);
+
+        if (dbError) throw dbError;
+
+        btn.textContent = 'Request Sent! Pending Approval 🛡️';
+        btn.style.background = '#16a34a';
+        setTimeout(closeModal, 3000);
+
+      } catch (error) {
+        alert("Error: " + error.message);
+        console.error(error);
+        btn.textContent = 'Find My Companion →';
+        btn.disabled = false;
+      }
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+    async function handleCompanionApply(event) {
+      if (event) event.preventDefault();
+
+      const idInput = document.getElementById('comp-id-upload');
+      const dlInput = document.getElementById('comp-dl-upload');
+      const photoInput = document.getElementById('comp-photo-upload');
+      const name = document.getElementById('comp-name').value;
+      const phone = document.getElementById('comp-phone').value;
+
+      if (!name || !phone) {
+        alert("Please fill in your Name and WhatsApp Number.");
+        return;
+      }
+      if (!photoInput || !photoInput.files.length) {
+        alert("Please upload a beautiful Profile Photo to attract customers!");
+        return;
+      }
+      if (!idInput.files.length && !dlInput.files.length) {
+        alert("Safety First! 🛡️\n\nPlease upload at least one valid Government ID (Aadhaar or Driving Licence) for your background check.");
+        return;
+      }
+
+      const btn = document.querySelector('#companion-modal .btn-submit');
+      btn.textContent = 'Securely Uploading ID... ✨';
+      btn.disabled = true;
+
+      try {
+        const uploads = [];
+        let idUrl = null;
+        let photoUrl = null;
+        let dlUrl = null;
+
+        // 1. Queue Photo Upload
+        const photoFile = photoInput.files[0];
+        const photoExt = photoFile.name.split('.').pop();
+        const photoName = `comp-photo-${Date.now()}-${Math.random().toString(36).substring(7)}.${photoExt}`;
+        uploads.push(supabaseClient.storage.from('id_documents').upload(photoName, photoFile));
+
+        // 2. Queue Aadhaar Upload (if provided)
+        let idName = null;
+        if (idInput.files.length > 0) {
+          const idFile = idInput.files[0];
+          const idExt = idFile.name.split('.').pop();
+          idName = `comp-id-${Date.now()}-${Math.random().toString(36).substring(7)}.${idExt}`;
+          uploads.push(supabaseClient.storage.from('id_documents').upload(idName, idFile));
+        }
+
+        // 3. Queue DL Upload (if provided)
+        let dlName = null;
+        if (dlInput.files.length > 0) {
+          const dlFile = dlInput.files[0];
+          const dlExt = dlFile.name.split('.').pop();
+          dlName = `comp-dl-${Date.now()}-${Math.random().toString(36).substring(7)}.${dlExt}`;
+          uploads.push(supabaseClient.storage.from('id_documents').upload(dlName, dlFile));
+        }
+
+        // Run all uploads simultaneously!
+        const results = await Promise.all(uploads);
+
+        // Check for any upload errors
+        for (let result of results) {
+          if (result.error) throw result.error;
+        }
+
+        // Get public URLs
+        photoUrl = supabaseClient.storage.from('id_documents').getPublicUrl(photoName).data.publicUrl;
+        if (idName) idUrl = supabaseClient.storage.from('id_documents').getPublicUrl(idName).data.publicUrl;
+        if (dlName) dlUrl = supabaseClient.storage.from('id_documents').getPublicUrl(dlName).data.publicUrl;
+
+        btn.textContent = 'Submitting Application... 🔄';
+
+        const cleanPhone = phone.replace(/[^0-9]/g, '');
+        const message = encodeURIComponent(`Hello ${name}! We received your application to become a WithMe Companion. Let's schedule a quick video call!`);
+        const whatsappLink = `https://wa.me/${cleanPhone}?text=${message}`;
+
+        const appData = {
+          name: name,
+          phone: whatsappLink,
+          city: document.getElementById('comp-city').value,
+          demographics: document.getElementById('comp-demographics').value,
+          occupation: document.getElementById('comp-occupation').value,
+          hobbies: document.getElementById('comp-hobbies').value,
+          interests: document.getElementById('comp-interests').value,
+          id_url: idUrl,
+          dl_url: dlUrl,
+          photo_url: photoUrl,
+          status: 'Pending Review'
+        };
+
+        const { error: dbError } = await supabaseClient
+          .from('applications')
+          .insert([appData]);
+
+        if (dbError) throw dbError;
+
+        btn.textContent = 'Application Received! 🎉';
+        btn.style.background = '#16a34a';
+        setTimeout(closeCompanionModal, 3000);
+
+      } catch (error) {
+        alert("Error: " + error.message);
+        console.error(error);
+        btn.textContent = 'Submit Application →';
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+
+</html>
